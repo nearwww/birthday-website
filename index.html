@@ -1,0 +1,537 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  font-family:'Space Grotesk',sans-serif;
+  background:#000;
+  color:#fff;
+  overflow-x:hidden;
+}
+
+canvas#bg{
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  z-index:0;
+  pointer-events:none;
+}
+
+.site{position:relative;z-index:1}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px 40px;
+  background:rgba(0,0,0,0.4);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  z-index:100;
+}
+.nav-logo{
+  font-size:18px;font-weight:700;
+  background:linear-gradient(135deg,#a78bfa,#f472b6,#fb923c);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  letter-spacing:-0.5px;
+}
+.nav-links{display:flex;gap:8px}
+.nav-btn{
+  padding:8px 20px;
+  border:1px solid rgba(255,255,255,0.2);
+  border-radius:100px;
+  background:rgba(255,255,255,0.05);
+  color:#fff;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:14px;
+  font-weight:500;
+  cursor:pointer;
+  transition:all 0.3s ease;
+  letter-spacing:0.2px;
+}
+.nav-btn:hover,.nav-btn.active{
+  background:rgba(167,139,250,0.2);
+  border-color:rgba(167,139,250,0.6);
+  color:#a78bfa;
+}
+
+/* PAGES */
+.page{display:none;animation:pageFadeIn 0.6s ease forwards}
+.page.active{display:block}
+@keyframes pageFadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== PAGE 1 ===== */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  text-align:center;padding:100px 20px 60px;
+  position:relative;
+}
+
+.badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:8px 18px;
+  border:1px solid rgba(167,139,250,0.4);
+  border-radius:100px;
+  font-size:13px;color:#a78bfa;
+  margin-bottom:32px;
+  background:rgba(167,139,250,0.08);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(167,139,250,0.4)}50%{box-shadow:0 0 0 8px rgba(167,139,250,0)}}
+
+.hero h1{
+  font-size:clamp(3rem,8vw,7rem);
+  font-weight:700;
+  line-height:0.95;
+  letter-spacing:-3px;
+  margin-bottom:8px;
+}
+.gradient-text{
+  background:linear-gradient(135deg,#a78bfa 0%,#f472b6 50%,#fb923c 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  display:block;
+}
+.hero-sub{
+  font-size:clamp(1rem,3vw,1.4rem);
+  color:rgba(255,255,255,0.5);
+  margin:24px 0 48px;
+  font-weight:300;
+  letter-spacing:0.5px;
+}
+
+/* 3D card */
+.card-3d-wrapper{
+  perspective:1000px;
+  margin-bottom:60px;
+}
+.card-3d{
+  width:340px;
+  padding:32px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:24px;
+  transition:transform 0.1s ease;
+  transform-style:preserve-3d;
+  position:relative;
+  overflow:hidden;
+}
+.card-3d::before{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(167,139,250,0.15),rgba(244,114,182,0.1),transparent);
+  border-radius:24px;
+}
+.card-3d .icon-big{font-size:48px;display:block;margin-bottom:16px}
+.card-3d h3{font-size:20px;font-weight:600;margin-bottom:8px}
+.card-3d p{font-size:14px;color:rgba(255,255,255,0.5);line-height:1.6}
+.card-3d .address{
+  margin-top:16px;padding:12px 16px;
+  background:rgba(167,139,250,0.1);
+  border:1px solid rgba(167,139,250,0.2);
+  border-radius:12px;
+  font-size:15px;font-weight:600;color:#a78bfa;
+}
+
+/* Floating pills */
+.float-pills{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:10px;
+  margin-bottom:48px;
+}
+.pill{
+  padding:10px 20px;
+  border-radius:100px;
+  font-size:14px;font-weight:500;
+  border:1px solid;
+  animation:float 3s ease-in-out infinite;
+}
+.pill:nth-child(1){background:rgba(167,139,250,0.1);border-color:rgba(167,139,250,0.3);color:#a78bfa;animation-delay:0s}
+.pill:nth-child(2){background:rgba(244,114,182,0.1);border-color:rgba(244,114,182,0.3);color:#f472b6;animation-delay:0.5s}
+.pill:nth-child(3){background:rgba(251,146,60,0.1);border-color:rgba(251,146,60,0.3);color:#fb923c;animation-delay:1s}
+.pill:nth-child(4){background:rgba(34,211,238,0.1);border-color:rgba(34,211,238,0.3);color:#22d3ee;animation-delay:1.5s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+/* Image grid */
+.img-section{
+  padding:80px 24px;
+  max-width:700px;margin:0 auto;
+}
+.img-section h2{
+  font-size:2.2rem;font-weight:700;
+  letter-spacing:-1px;margin-bottom:8px;
+  text-align:center;
+}
+.img-section .section-sub{
+  text-align:center;
+  color:rgba(255,255,255,0.4);
+  margin-bottom:40px;font-size:15px;
+}
+.img-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+}
+.img-placeholder{
+  border-radius:20px;
+  border:1.5px dashed rgba(255,255,255,0.15);
+  background:rgba(255,255,255,0.03);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:10px;
+  color:rgba(255,255,255,0.25);
+  font-size:13px;
+  transition:all 0.3s ease;
+  cursor:pointer;
+  position:relative;
+  overflow:hidden;
+}
+.img-placeholder:hover{
+  border-color:rgba(167,139,250,0.4);
+  background:rgba(167,139,250,0.06);
+  color:rgba(167,139,250,0.6);
+}
+.img-placeholder:nth-child(1){height:240px}
+.img-placeholder:nth-child(2){height:240px}
+.img-placeholder:nth-child(3){
+  grid-column:span 2;height:180px;
+}
+.img-placeholder .ph-icon{font-size:28px;opacity:0.4}
+.img-placeholder .ph-label{font-weight:500}
+
+/* Divider line */
+.divider{
+  width:1px;height:80px;
+  background:linear-gradient(to bottom,transparent,rgba(255,255,255,0.2),transparent);
+  margin:0 auto 60px;
+}
+
+/* Info row */
+.info-row{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:16px;
+  padding:0 24px 80px;
+  max-width:700px;margin:0 auto;
+}
+.info-card{
+  padding:24px 20px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:20px;
+  text-align:center;
+  transition:all 0.3s ease;
+}
+.info-card:hover{
+  background:rgba(167,139,250,0.06);
+  border-color:rgba(167,139,250,0.2);
+  transform:translateY(-4px);
+}
+.info-card .ic-icon{font-size:24px;margin-bottom:10px;display:block}
+.info-card .ic-label{font-size:11px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.info-card .ic-value{font-size:14px;font-weight:600;color:#fff}
+
+/* ===== PAGE 2 ===== */
+.contacts-page{
+  min-height:100vh;
+  padding:120px 24px 80px;
+  max-width:600px;margin:0 auto;
+}
+.contacts-page .page-title{
+  font-size:clamp(2.5rem,7vw,5rem);
+  font-weight:700;letter-spacing:-2px;
+  margin-bottom:8px;
+}
+.contacts-page .page-title span{
+  background:linear-gradient(135deg,#22d3ee,#a78bfa);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.contacts-page .page-desc{
+  color:rgba(255,255,255,0.3);
+  font-size:16px;margin-bottom:60px;font-weight:300;
+}
+
+.contact-list{display:flex;flex-direction:column;gap:12px}
+.contact-row{
+  display:flex;align-items:center;gap:20px;
+  padding:24px 28px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.07);
+  border-radius:20px;
+  transition:all 0.4s ease;
+  cursor:default;
+}
+.contact-row:hover{
+  background:rgba(255,255,255,0.06);
+  border-color:rgba(255,255,255,0.15);
+  transform:translateX(6px);
+}
+.cr-dot{
+  width:44px;height:44px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;flex-shrink:0;
+}
+.cr-dot.purple{background:rgba(167,139,250,0.15)}
+.cr-dot.cyan{background:rgba(34,211,238,0.15)}
+.cr-dot.orange{background:rgba(251,146,60,0.15)}
+.cr-dot.pink{background:rgba(244,114,182,0.15)}
+.cr-info{flex:1}
+.cr-label{font-size:12px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.cr-value{font-size:17px;font-weight:600;color:#fff}
+
+.map-hint{
+  margin-top:40px;
+  padding:24px 28px;
+  border-radius:20px;
+  background:linear-gradient(135deg,rgba(167,139,250,0.1),rgba(244,114,182,0.05));
+  border:1px solid rgba(167,139,250,0.2);
+  display:flex;gap:16px;align-items:flex-start;
+}
+.map-hint .mh-icon{font-size:28px}
+.map-hint h4{font-size:15px;font-weight:600;margin-bottom:4px}
+.map-hint p{font-size:13px;color:rgba(255,255,255,0.4);line-height:1.5}
+.mh-badge{
+  display:inline-block;margin-top:10px;
+  padding:5px 12px;border-radius:100px;
+  background:rgba(167,139,250,0.15);
+  border:1px solid rgba(167,139,250,0.3);
+  font-size:12px;color:#a78bfa;font-weight:600;
+}
+</style>
+
+<canvas id="bg"></canvas>
+
+<div class="site">
+  <nav>
+    <div class="nav-logo">✦ Party</div>
+    <div class="nav-links">
+      <button class="nav-btn active" onclick="showPage(0,this)">Вечеринка</button>
+      <button class="nav-btn" onclick="showPage(1,this)">Контакты</button>
+    </div>
+  </nav>
+
+  <!-- PAGE 1 -->
+  <div class="page active" id="p0">
+    <div class="hero">
+      <div class="badge">✦ &nbsp; Тебя ждут!</div>
+      <h1>
+        С Днём<br>
+        <span class="gradient-text">Рождения!</span>
+      </h1>
+      <p class="hero-sub">Приглашаю тебя на мой день рождения —<br>будет огонь, обещаю</p>
+      <div class="card-3d-wrapper">
+        <div class="card-3d" id="card3d">
+          <span class="icon-big">🏢</span>
+          <h3>Место встречи</h3>
+          <p>Встречаемся рядом с клубом, потом заходим вместе — не потеряемся!</p>
+          <div class="address">📍 VORTEX Club · Сатпаева 350/1</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="info-row">
+      <div class="info-card">
+        <span class="ic-icon">🎈</span>
+        <div class="ic-label">Формат</div>
+        <div class="ic-value">День рождения</div>
+      </div>
+      <div class="info-card">
+        <span class="ic-icon">📍</span>
+        <div class="ic-label">Место</div>
+        <div class="ic-value">VORTEX gameClub</div>
+      </div>
+      <div class="info-card">
+        <span class="ic-icon">🎭</span>
+        <div class="ic-label">Атмосфера</div>
+        <div class="ic-value">Пк клубочная</div>
+      </div>
+    </div>
+
+    <div class="img-section">
+      <h2>Моменты</h2>
+      <p class="section-sub">Фотографии добавишь сам — место уже готово</p>
+      <div class="img-grid">
+        <div class="img-placeholder">
+          <span class="ph-icon">🖼</span>
+          <span class="ph-label">Фото 1</span>
+          <span>нажми чтобы добавить</span>
+        </div>
+        <div class="img-placeholder">
+          <span class="ph-icon">🖼</span>
+          <span class="ph-label">Фото 2</span>
+          <span>нажми чтобы добавить</span>
+        </div>
+        <div class="img-placeholder">
+          <span class="ph-icon">🖼</span>
+          <span class="ph-label">Широкое фото</span>
+          <span>нажми чтобы добавить</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 2 -->
+  <div class="page" id="p1">
+    <div class="contacts-page">
+      <h1 class="page-title"><span>Contact</span></h1>
+      <p class="page-desc">Если есть вопросы — пиши или звони, отвечу быстро</p>
+
+      <div class="contact-list">
+        <div class="contact-row">
+          <div class="cr-dot purple">👤</div>
+          <div class="cr-info">
+            <div class="cr-label">Имя</div>
+            <div class="cr-value">Асанов Амирхан</div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="cr-dot cyan">📱</div>
+          <div class="cr-info">
+            <div class="cr-label">Телефон</div>
+            <div class="cr-value">+7 771 130-15-21</div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="cr-dot orange">🏠</div>
+          <div class="cr-info">
+            <div class="cr-label">Мой адрес</div>
+            <div class="cr-value">ул. Сатпаева, 350/4</div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="cr-dot pink">🎉</div>
+          <div class="cr-info">
+            <div class="cr-label">Место вечеринки</div>
+            <div class="cr-value">VORTEX Club · Сатпаева 350/1</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="map-hint">
+        <span class="mh-icon">📍</span>
+        <div>
+          <h4>Как нас найти</h4>
+          <p>Встречаемся у входа рядом с клубом VORTEX.</p>
+          <span class="mh-badge">Сатпаева 350/1, рядом со 350/4</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showPage(idx, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('p' + idx).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+const card = document.getElementById('card3d');
+if(card){
+  const wrapper = card.parentElement;
+  wrapper.addEventListener('mousemove', e => {
+    const r = wrapper.getBoundingClientRect();
+    const x = (e.clientX - r.left - r.width/2) / (r.width/2);
+    const y = (e.clientY - r.top - r.height/2) / (r.height/2);
+    card.style.transform = `rotateY(${x*15}deg) rotateX(${-y*15}deg) translateZ(10px)`;
+  });
+  wrapper.addEventListener('mouseleave', () => {
+    card.style.transform = 'rotateY(0deg) rotateX(0deg) translateZ(0px)';
+  });
+}
+
+const canvas = document.getElementById('bg');
+const ctx = canvas.getContext('2d');
+let W, H, particles = [];
+
+function resize(){
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+class Particle {
+  constructor(){this.reset()}
+  reset(){
+    this.x = Math.random()*W;
+    this.y = Math.random()*H;
+    this.z = Math.random();
+    this.size = this.z * 2 + 0.5;
+    this.speed = this.z * 0.4 + 0.1;
+    this.hue = Math.random()*60 + 260;
+    this.opacity = this.z * 0.6 + 0.1;
+    this.drift = (Math.random()-0.5)*0.3;
+  }
+  update(){
+    this.y -= this.speed;
+    this.x += this.drift;
+    if(this.y < -5) this.reset(), this.y = H+5;
+  }
+  draw(){
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+    ctx.fillStyle = `hsla(${this.hue},80%,70%,${this.opacity})`;
+    ctx.fill();
+  }
+}
+
+for(let i=0;i<120;i++) particles.push(new Particle());
+
+let mx=W/2, my=H/2;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+
+function drawGrid(){
+  ctx.strokeStyle='rgba(167,139,250,0.03)';
+  ctx.lineWidth=1;
+  const s=80;
+  for(let x=0;x<W;x+=s){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}
+  for(let y=0;y<H;y+=s){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
+}
+
+function drawGlow(){
+  const g=ctx.createRadialGradient(mx,my,0,mx,my,300);
+  g.addColorStop(0,'rgba(167,139,250,0.08)');
+  g.addColorStop(1,'transparent');
+  ctx.fillStyle=g;
+  ctx.fillRect(0,0,W,H);
+
+  const g2=ctx.createRadialGradient(W*0.8,H*0.2,0,W*0.8,H*0.2,400);
+  g2.addColorStop(0,'rgba(244,114,182,0.05)');
+  g2.addColorStop(1,'transparent');
+  ctx.fillStyle=g2;
+  ctx.fillRect(0,0,W,H);
+}
+
+function animate(){
+  ctx.clearRect(0,0,W,H);
+  drawGrid();
+  drawGlow();
+  particles.forEach(p=>{p.update();p.draw()});
+  requestAnimationFrame(animate);
+}
+animate();
+
+document.querySelectorAll('.img-placeholder').forEach(el=>{
+  el.addEventListener('click',()=>{
+    const input=document.createElement('input');
+    input.type='file';input.accept='image/*';
+    input.onchange=e=>{
+      const file=e.target.files[0];
+      if(!file)return;
+      const url=URL.createObjectURL(file);
+      el.style.backgroundImage=`url(${url})`;
+      el.style.backgroundSize='cover';
+      el.style.backgroundPosition='center';
+      el.innerHTML='';
+      el.style.borderStyle='solid';
+      el.style.borderColor='rgba(167,139,250,0.4)';
+    };
+    input.click();
+  });
+});
+</script>
